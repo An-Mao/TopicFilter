@@ -148,18 +148,20 @@ function adddivhtml() {
     addeventx();
     //分析数据
     let tb = document.getElementsByClassName('stream');
-    if (tb != null || tb != '') {
-        log('pic');
+    if (tb != null && tb != '' && tb.length >0) {
+        //log(tb);
         tb = document.getElementsByClassName('dcsns-li dcsns-rss dcsns-feed-0');
         for (let i = tb.length - 1; i >= 0; i--) {
             tbcon = tb[i].getElementsByClassName('section-title')[0].getElementsByTagName('a')[0];
-            //log(tbcon.innerHTML);
+            log(tbcon.innerHTML);
             if(is_notundefined(tbcon)){
                 if(checkcon(tbcon.innerHTML)){
                     tb[i].remove();
+                }else{
+                    tbcon = tb[i].getElementsByClassName('section-intro')[0];
+                    log(tbcon);
+                    if (xuser(tbcon)) { tb[i].remove() }
                 }
-                tbcon = tb[i].getElementsByClassName('section-intro')[0];
-                if (xuser(tbcon)) { tb[i].remove() }
             }
             
         }
@@ -174,9 +176,12 @@ function adddivhtml() {
                 //log(i);
                 tbcon = tb[i].getElementsByTagName("th")[0].getElementsByTagName("a")[0];
                 //log(tbcon);
-                if(checkcon(tbcon.innerHTML)){tb[i].remove();}
-                tbcon = tb[i].children[3];
-                if (xuser(tbcon)) { tb[i].remove(); }
+                if(checkcon(tbcon.innerHTML)){
+                    tb[i].remove();
+                }else{
+                    tbcon = tb[i].children[3];
+                    if (xuser(tbcon)) { tb[i].remove(); }
+                }
             }
             return;
         } else {
@@ -189,9 +194,12 @@ function adddivhtml() {
                     if (is_notundefined(tbt)) {
                         tbcon = tbt.children[0];
                         if (is_notundefined(tbcon)) {
-                            if(checkcon(tbcon.innerHTML)){tb.rows[i].innerHTML = '';}
-                            trtd = tb.rows[i].cells[2];
-                            if (xuser(trtd)) { tb.rows[i].innerHTML = ''; }
+                            if(checkcon(tbcon.innerHTML)){
+                                tb.rows[i].innerHTML = '';
+                            }else{
+                                trtd = tb.rows[i].cells[2];
+                                if (xuser(trtd)) { tb.rows[i].innerHTML = ''; }
+                            }
                         }
                     }
                 }
